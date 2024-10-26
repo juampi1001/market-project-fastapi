@@ -1,11 +1,18 @@
-from typing import Optional
-from fastapi import APIRouter, Query
+from typing import List, Optional
+from fastapi import APIRouter, Query, UploadFile, status
+from fastapi.responses import JSONResponse
 from api.datasource.products_datasource import (insert_product,get_product,
                                                 modify_product,delete_product,
                                                 read_all_products)
+from api.helpers.firebase.firebase_storage import upload_lists_to_firebase
 from api.models.product_model import Product
 
 router = APIRouter(tags=['products'])
+
+@router.post("/product-images")
+async def upload_product_images(images: List[UploadFile]):
+    response = await upload_lists_to_firebase(images, "products")
+    return response
 
 @router.post("/products")
 async def create_new_product(product: Product):
