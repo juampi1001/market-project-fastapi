@@ -12,3 +12,5 @@ __pycache__/
 dump/
 *.bak
 *.backup
+
+api/helpers/firebase/market-project-key.json
